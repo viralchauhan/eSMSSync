@@ -1,0 +1,6 @@
+@eSMSSync_HostAddress = http://localhost:5231
+
+GET {{eSMSSync_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
