@@ -6,7 +6,8 @@ using eSMSSync;
 public class SmsService
 {
     // Updated connection string
-    private readonly string _connectionString = "Data Source=VEER;Initial Catalog=eWealthTracker;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=viral;TrustServerCertificate=True;";
+    private readonly string _connectionString = "Data Source=db13167.databaseasp.net;Initial Catalog=db13167;Integrated Security=False;Persist Security Info=False;User ID=db13167;Password=8Bw@Tn#52?Cj;TrustServerCertificate=True;Encrypt=False; MultipleActiveResultSets=True;";
+    //private readonly string _connectionString = "Data Source=VEER;Initial Catalog=eWealthTracker;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=viral;TrustServerCertificate=True;";
 
 
     // Insert SMS details into the database, avoiding duplicates
@@ -34,8 +35,8 @@ public class SmsService
             if (existingCount == 0)
             {
                 var insertQuery = @"
-                    INSERT INTO SmsRow (Sender, SmsBody, SmsDateTime)
-                    VALUES (@Sender, @SmsBody, @SmsDateTime)";
+                    INSERT INTO SmsRow (SmsRowId,Sender, SmsBody, SmsDateTime)
+                    VALUES (NEWID(),@Sender, @SmsBody, @SmsDateTime)";
 
                 // Execute the insert query
                 await connection.ExecuteAsync(insertQuery, new
