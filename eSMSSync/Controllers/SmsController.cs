@@ -83,7 +83,18 @@ namespace eSMSSync.Controllers
             //Save associated titles
             await _budgetService.AssociatedTitlesSaveAsync(_data.AssociatedTitles!, serverData.Pan, serverData.EmailId, CancellationToken.None);
 
+            //Save wallets
+            await _budgetService.WalletsSaveAsync(_data.Wallets!, serverData.Pan, serverData.EmailId, CancellationToken.None);
 
+            //Save budgets
+            await _budgetService.BudgetsSaveAsync(_data.Budgets!, serverData.Pan, serverData.EmailId, CancellationToken.None);
+
+            //Save objectives
+            await _budgetService.ObjectivesSaveAsync(_data.Objectives!, serverData.Pan, serverData.EmailId, CancellationToken.None);
+
+
+            //Save transactions
+            await _budgetService.TransactionsSaveAsync(_data.Transactions!, serverData.Pan, serverData.EmailId, CancellationToken.None);
 
 
 

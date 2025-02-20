@@ -148,7 +148,7 @@
     public class Transaction
     {
         [JsonProperty("transaction_pk")]
-        public string TransactionPk { get; set; }
+        public required string  TransactionPk { get; set; }
 
         [JsonProperty("paired_transaction_fk")]
         public string? PairedTransactionFk { get; set; }
@@ -385,6 +385,10 @@
 
         [JsonProperty("is_absolute_spending_limit")]
         public bool IsAbsoluteSpendingLimit { get; set; }
+
+        [JsonProperty("icon_name")]
+        public string? IconName { get; set; }
+
     }
 
     public class CategoryBudgetLimit

@@ -9,5 +9,13 @@ namespace eSMSSync.Service
         Task<bool> CategoriesSaveAsync(CategoryData categoryData,CancellationToken cancellationToken);
 
         Task<bool> AssociatedTitlesSaveAsync(AssociatedTitleData associatedTitleData, string Pan, string EmailId, CancellationToken cancellationToken);
+    
+        Task<bool> WalletsSaveAsync(WalletData walletData, string Pan, string EmailId, CancellationToken cancellationToken);
+
+        Task<bool> BudgetsSaveAsync(BudgetData budgetData, string Pan, string EmailId, CancellationToken cancellationToken);
+
+        Task<bool> ObjectivesSaveAsync(ObjectiveData objectiveData, string Pan, string EmailId, CancellationToken cancellationToken);
+
+        Task<bool> TransactionsSaveAsync(TransactionData transactionData, string Pan, string EmailId, CancellationToken cancellationToken);
     }
 }
