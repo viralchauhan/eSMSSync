@@ -15,5 +15,15 @@
         Task<dynamic> SaveObjectivesAsync(IEnumerable<dynamic> objective, CancellationToken token);
 
         Task<dynamic> SaveTransactionsAsync(IEnumerable<dynamic> transaction, CancellationToken token);
+
+        Task<dynamic> SaveCategoryBudgetLimitsAsync(IEnumerable<dynamic> categoryBudgetLimit, CancellationToken token);
+
+        Task<dynamic> SaveDeleteLogsAsync(IEnumerable<dynamic> deleteLog, CancellationToken token);
+
+        Task<dynamic> SaveScannerTemplatesAsync(IEnumerable<dynamic> scannerTemplate, CancellationToken token);
+
+        Task<dynamic> SaveMobileDataBackupAsync(dynamic mobileDataBackup, CancellationToken token);
+
+        Task<UserReply> VerifyUserAsync(VerifyAuthDetails verifyAuthDetails, CancellationToken token);
     }
 }

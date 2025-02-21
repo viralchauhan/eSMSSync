@@ -74,6 +74,10 @@ namespace eSMSSync.Controllers
             // Read SQLite database and convert to structured JSON
             var _data = ReadSQLiteDatabase(filePath);
 
+
+            //Save MobileDataBackup
+            await _budgetService.MobileDataBackupSaveAsync(filePath, serverData.Pan, serverData.EmailId, CancellationToken.None);
+
             //Save AppSettings 
             await _budgetService.AppSettingsSaveAsync(_data.AppSettings!,serverData.Pan,serverData.EmailId, CancellationToken.None);
 
@@ -95,6 +99,15 @@ namespace eSMSSync.Controllers
 
             //Save transactions
             await _budgetService.TransactionsSaveAsync(_data.Transactions!, serverData.Pan, serverData.EmailId, CancellationToken.None);
+
+            //Save category_budget_limits
+            await _budgetService.CategoryBudgetLimitsSaveAsync(_data.CategoryBudgetLimits!, serverData.Pan, serverData.EmailId, CancellationToken.None);
+
+            //Save delete_logs
+            await _budgetService.DeleteLogsSaveAsync(_data.DeleteLogs!, serverData.Pan, serverData.EmailId, CancellationToken.None);
+
+            //Save scanner_templates
+            await _budgetService.ScannerTemplatesSaveAsync(_data.ScannerTemplates!, serverData.Pan, serverData.EmailId, CancellationToken.None);
 
 
 

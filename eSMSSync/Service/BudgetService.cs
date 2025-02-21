@@ -1,4 +1,5 @@
 ﻿
+using Azure.Core;
 using eSMSSync.Infrastructure;
 using eSMSSync.Models;
 using System.Dynamic;
@@ -35,7 +36,7 @@ namespace eSMSSync.Service
         public async Task<bool> CategoriesSaveAsync(CategoryData categoryData, CancellationToken cancellationToken)
         {
             var requests = new List<dynamic>();
-            
+
 
             if (categoryData.RecordCount > 0)
             {
@@ -67,7 +68,7 @@ namespace eSMSSync.Service
         public async Task<bool> AssociatedTitlesSaveAsync(AssociatedTitleData associatedTitleData, string Pan, string EmailId, CancellationToken cancellationToken)
         {
             var requests = new List<dynamic>();
-            if(associatedTitleData.RecordCount > 0)
+            if (associatedTitleData.RecordCount > 0)
             {
                 foreach (var associatedTitle in associatedTitleData.Records)
                 {
@@ -95,20 +96,20 @@ namespace eSMSSync.Service
         public async Task<bool> WalletsSaveAsync(WalletData walletData, string Pan, string EmailId, CancellationToken cancellationToken)
         {
             var requests = new List<dynamic>();
-            if(walletData.RecordCount > 0)
+            if (walletData.RecordCount > 0)
             {
                 foreach (var wallet in walletData.Records)
                 {
                     dynamic expando = new ExpandoObject();
                     expando.wallet_pk = wallet.WalletPk;
                     expando.name = wallet.Name;
-                    expando.colour = wallet.Colour;
-                    expando.icon_name = wallet.IconName;
+                    expando.colour = wallet.Colour ?? "";
+                    expando.icon_name = wallet.IconName ?? "";
                     expando.date_created = wallet.DateCreated;
                     expando.date_time_modified = wallet.DateTimeModified;
                     expando.order = wallet.Order;
-                    expando.currency = wallet.Currency;
-                    expando.currency_format = wallet.CurrencyFormat;
+                    expando.currency = wallet.Currency ?? "";
+                    expando.currency_format = wallet.CurrencyFormat ?? "";
                     expando.decimals = wallet.Decimals;
                     expando.home_page_widget_display = wallet.HomePageWidgetDisplay;
                     expando.pan = Pan;
@@ -148,7 +149,7 @@ namespace eSMSSync.Service
                     expando.date_created = budget.DateCreated;
                     expando.date_time_modified = budget.DateTimeModified;
                     expando.pinned = budget.Pinned;
-                    expando.order = budget.Order;   
+                    expando.order = budget.Order;
                     expando.wallet_fk = budget.WalletFk;
                     expando.budget_transaction_filters = budget.BudgetTransactionFilters;
                     expando.member_transaction_filters = budget.MemberTransactionFilters;
@@ -206,42 +207,42 @@ namespace eSMSSync.Service
         public async Task<bool> TransactionsSaveAsync(TransactionData transactionData, string Pan, string EmailId, CancellationToken cancellationToken)
         {
             var requests = new List<dynamic>();
-            if(transactionData.RecordCount > 0)
+            if (transactionData.RecordCount > 0)
             {
                 foreach (var transaction in transactionData.Records)
                 {
                     dynamic expando = new ExpandoObject();
                     expando.transaction_pk = transaction.TransactionPk;
-                    expando.paired_transaction_fk = transaction.PairedTransactionFk;
-                    expando.name= transaction.Name;
+                    expando.paired_transaction_fk = transaction.PairedTransactionFk ?? "";
+                    expando.name = transaction.Name ?? "";
                     expando.amount = transaction.Amount;
-                    expando.note = transaction.Note;
-                    expando.category_fk = transaction.CategoryFk;
-                    expando.sub_category_fk = transaction.SubCategoryFk;
-                    expando.wallet_fk = transaction.WalletFk;
+                    expando.note = transaction.Note ?? "";
+                    expando.category_fk = transaction.CategoryFk ?? "";
+                    expando.sub_category_fk = transaction.SubCategoryFk ?? "";
+                    expando.wallet_fk = transaction.WalletFk ?? "";
                     expando.date_created = transaction.DateCreated;
                     expando.date_time_modified = transaction.DateTimeModified;
                     expando.original_date_due = transaction.OriginalDateDue;
                     expando.income = transaction.Income;
-                    expando.period_length = transaction.PeriodLength;
-                    expando.reoccurrence = transaction.Reoccurrence;
-                    expando.end_date = transaction.EndDate;
-                    expando.upcoming_transaction_notification = transaction.UpcomingTransactionNotification;
-                    expando.type = transaction.Type;
+                    expando.period_length = transaction.PeriodLength ?? 0;
+                    expando.reoccurrence = transaction.Reoccurrence ?? 0;
+                    expando.end_date = transaction.EndDate ?? 0;
+                    expando.upcoming_transaction_notification = transaction.UpcomingTransactionNotification ?? 0;
+                    expando.type = transaction.Type ?? 0;
                     expando.paid = transaction.Paid;
                     expando.created_another_future_transaction = transaction.CreatedAnotherFutureTransaction;
                     expando.skip_paid = transaction.SkipPaid;
-                    expando.method_added = transaction.MethodAdded;
-                    expando.transaction_owner_email = transaction.TransactionOwnerEmail;
-                    expando.transaction_original_owner_email = transaction.TransactionOriginalOwnerEmail;
-                    expando.shared_key = transaction.SharedKey;
-                    expando.shared_old_key = transaction.SharedOldKey;
-                    expando.shared_status = transaction.SharedStatus;
-                    expando.shared_date_updated = transaction.SharedDateUpdated;
-                    expando.shared_reference_budget_pk = transaction.SharedReferenceBudgetPk;
-                    expando.objective_fk = transaction.ObjectiveFk;
-                    expando.objective_loan_fk = transaction.ObjectiveLoanFk;
-                    expando.budget_fks_exclude = transaction.BudgetFksExclude;
+                    expando.method_added = transaction.MethodAdded ?? 0;
+                    expando.transaction_owner_email = transaction.TransactionOwnerEmail ?? "";
+                    expando.transaction_original_owner_email = transaction.TransactionOriginalOwnerEmail ?? "";
+                    expando.shared_key = transaction.SharedKey ?? "";
+                    expando.shared_old_key = transaction.SharedOldKey ?? "";
+                    expando.shared_status = transaction.SharedStatus ?? 0;
+                    expando.shared_date_updated = transaction.SharedDateUpdated ?? 0;
+                    expando.shared_reference_budget_pk = transaction.SharedReferenceBudgetPk ?? "";
+                    expando.objective_fk = transaction.ObjectiveFk ?? "";
+                    expando.objective_loan_fk = transaction.ObjectiveLoanFk ?? "";
+                    expando.budget_fks_exclude = transaction.BudgetFksExclude ?? "";
                     expando.pan = Pan;
                     expando.email = EmailId;
 
@@ -252,6 +253,118 @@ namespace eSMSSync.Service
             }
 
             return true;
+        }
+
+        public async Task<bool> CategoryBudgetLimitsSaveAsync(CategoryBudgetLimitData categoryBudgetLimitData, string Pan, string EmailId, CancellationToken cancellationToken)
+        {
+            var requests = new List<dynamic>();
+            if (categoryBudgetLimitData.RecordCount > 0)
+            {
+                foreach (var categoryBudgetLimit in categoryBudgetLimitData.Records)
+                {
+                    dynamic expando = new ExpandoObject();
+                    expando.category_limit_pk = categoryBudgetLimit.CategoryLimitPk;
+                    expando.category_fk = categoryBudgetLimit.CategoryFk;
+                    expando.budget_fk = categoryBudgetLimit.BudgetFk;
+                    expando.amount = categoryBudgetLimit.Amount;
+                    expando.date_time_modified = categoryBudgetLimit.DateTimeModified;
+                    expando.wallet_fk = categoryBudgetLimit.WalletFk;
+                    expando.pan = Pan;
+                    expando.email = EmailId;
+
+                    requests.Add(expando);
+                }
+
+                await _budgetTranscation.SaveCategoryBudgetLimitsAsync(requests, cancellationToken);
+            }
+
+            return true;
+        }
+    
+        public async Task<bool> DeleteLogsSaveAsync(DeleteLogData deleteLogData, string Pan, string EmailId, CancellationToken cancellationToken)
+        {
+            var requests = new List<dynamic>();
+            if (deleteLogData.RecordCount > 0)
+            {
+                foreach (var deleteLog in deleteLogData.Records)
+                {
+                    dynamic expando = new ExpandoObject();
+                    expando.delete_log_pk = deleteLog.DeleteLogPk;
+                    expando.entry_pk = deleteLog.EntryPk;
+                    expando.type = deleteLog.Type;
+                    expando.date_time_modified = deleteLog.DateTimeModified;
+                    expando.pan = Pan;
+                    expando.email = EmailId;
+
+                    requests.Add(expando);
+                }
+
+                await _budgetTranscation.SaveDeleteLogsAsync(requests, cancellationToken);
+            }
+
+            return true;
+        }
+
+        public async Task<bool> ScannerTemplatesSaveAsync(ScannerTemplateData scannerTemplateData, string Pan, string EmailId, CancellationToken cancellationToken)
+        {
+            var requests = new List<dynamic>();
+            if (scannerTemplateData.RecordCount > 0)
+            {
+                foreach (var scannerTemplate in scannerTemplateData.Records)
+                {
+                    dynamic expando = new ExpandoObject();
+                    expando.scanner_template_pk = scannerTemplate.ScannerTemplatePk;
+                    expando.date_created = scannerTemplate.DateCreated;
+                    expando.date_time_modified = scannerTemplate.DateTimeModified;
+                    expando.template_name = scannerTemplate.TemplateName;
+                    expando.contains = scannerTemplate.Contains;
+                    expando.title_transaction_before = scannerTemplate.TitleTransactionBefore;
+                    expando.title_transaction_after = scannerTemplate.TitleTransactionAfter;
+                    expando.amount_transaction_before = scannerTemplate.AmountTransactionBefore;
+                    expando.amount_transaction_after = scannerTemplate.AmountTransactionAfter;
+                    expando.default_category_fk = scannerTemplate.DefaultCategoryFk;
+                    expando.wallet_fk = scannerTemplate.WalletFk;
+                    expando.ignore = scannerTemplate.Ignore;
+                    expando.pan = Pan;
+                    expando.email = EmailId;
+
+                    requests.Add(expando);
+                }
+
+                await _budgetTranscation.SaveScannerTemplatesAsync(requests, cancellationToken);
+            }
+
+            return true;
+        }
+
+        public async Task<bool> MobileDataBackupSaveAsync(string filePath, string Pan, string EmailId, CancellationToken cancellationToken)
+        {
+            dynamic request = new ExpandoObject();
+
+            request.BackupFileName = filePath;
+            request.Pan = Pan;
+            request.EmailId = EmailId;
+
+            await _budgetTranscation.SaveMobileDataBackupAsync(request, cancellationToken);
+
+            return true;
+        }
+
+        public async Task<UserReply> VerifyUser(VerifyAuthDetails verifyAuthDetails, CancellationToken cancellationToken)
+        {
+            var reply = await _budgetTranscation.VerifyUserAsync(verifyAuthDetails, cancellationToken);
+            if(reply == null || reply?.Name == null)
+            {
+                reply = new UserReply
+                {
+                    IsVerified = false
+                };
+            } else
+            {
+                reply.IsVerified = true;
+            }
+
+            return reply;
         }
     }
 }
