@@ -280,7 +280,7 @@ namespace eSMSSync.Service
 
             return true;
         }
-    
+
         public async Task<bool> DeleteLogsSaveAsync(DeleteLogData deleteLogData, string Pan, string EmailId, CancellationToken cancellationToken)
         {
             var requests = new List<dynamic>();
@@ -353,7 +353,7 @@ namespace eSMSSync.Service
         public async Task<UserReply> VerifyUser(VerifyAuthDetails verifyAuthDetails, CancellationToken cancellationToken)
         {
             var reply = await _budgetTranscation.VerifyUserAsync(verifyAuthDetails, cancellationToken);
-            if(reply == null || reply?.Name == null)
+            if (reply == null || reply?.Name == null)
             {
                 reply = new UserReply
                 {
@@ -363,6 +363,13 @@ namespace eSMSSync.Service
             {
                 reply.IsVerified = true;
             }
+
+            return reply;
+        }
+
+        public async Task<MobileDataBackup> GetMobileDataBackupAsync(string Pan, string EmailId, CancellationToken cancellationToken)
+        {
+            var reply = await _budgetTranscation.GetMobileDataBackupAsync(Pan, EmailId, cancellationToken);
 
             return reply;
         }

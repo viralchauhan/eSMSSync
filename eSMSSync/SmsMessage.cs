@@ -7,7 +7,11 @@ namespace eSMSSync
         public string Sender { get; set; }
         public string SmsBody { get; set; }
 
-        public string SmsDateTime { get; set; } 
+        public string SmsDateTime { get; set; }
+        
+        public string Pan { get; set; }
+
+        public string EmailId { get; set; }
     }
 
     public class ServerData

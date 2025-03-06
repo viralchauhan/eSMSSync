@@ -27,5 +27,7 @@ namespace eSMSSync.Service
         Task<bool> DeleteLogsSaveAsync(DeleteLogData deleteLogData, string Pan, string EmailId, CancellationToken cancellationToken);
 
         Task<bool> ScannerTemplatesSaveAsync(ScannerTemplateData scannerTemplateData, string Pan, string EmailId, CancellationToken cancellationToken);
+        
+        Task<MobileDataBackup> GetMobileDataBackupAsync(string Pan, string EmailId, CancellationToken cancellationToken);
     }
 }

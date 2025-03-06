@@ -152,5 +152,17 @@ namespace eSMSSync.Infrastructure
             return await _dataDbConfigurationService.GetDataAsync<object, UserReply>(dbSettings);
             
         }
+
+        public async Task<MobileDataBackup> GetMobileDataBackupAsync(string Pan, string EmailId, CancellationToken token)
+        {
+            var dbSettings = new DataDbConfigSettings<object>
+            {
+                PlainQuery = "SP_GET_LATEST_MOBILE_DATA_BACKUP", // Stored procedure for fetching Cams settings by emailid
+                Request = new { Pan = Pan }
+            };
+
+            return await _dataDbConfigurationService.GetDataAsync<object, MobileDataBackup>(dbSettings);
+
+        }
     }
 }

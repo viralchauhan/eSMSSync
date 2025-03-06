@@ -1,4 +1,6 @@
-﻿namespace eSMSSync.Infrastructure
+﻿using eSMSSync.Models;
+
+namespace eSMSSync.Infrastructure
 {
     public interface IBudgetTranscation
     {
@@ -25,5 +27,7 @@
         Task<dynamic> SaveMobileDataBackupAsync(dynamic mobileDataBackup, CancellationToken token);
 
         Task<UserReply> VerifyUserAsync(VerifyAuthDetails verifyAuthDetails, CancellationToken token);
+
+        Task<MobileDataBackup> GetMobileDataBackupAsync(string Pan, string EmailId, CancellationToken token);
     }
 }

@@ -30,10 +30,10 @@ namespace eSMSSync.Controllers
         public async Task<IActionResult> GetPushSms([FromBody] SmsMessage smsMessage)
         {
             // Log the incoming SMS details
-            //Log.Information("Received SMS from {Sender}: {SmsBody} at {SmsDateTime}", smsMessage.Sender, smsMessage.SmsBody, smsMessage.SmsDateTime);
+            //Log.Information("Received SMS from {Sender}: {SmsBody} at {SmsDateTime}  {Pan} <=> {EmailId}", smsMessage.Sender, smsMessage.SmsBody, smsMessage.SmsDateTime,smsMessage.Pan,smsMessage.EmailId);
 
             // Insert the SMS record into the database
-            //await _smsService.InsertSmsAsync(smsMessage);
+            await _smsService.InsertSmsAsync(smsMessage);
 
             // Return the same SMS details as the response
             return Ok(new { smsMessage.Sender, smsMessage.SmsBody, smsMessage.SmsDateTime });
@@ -119,6 +119,35 @@ namespace eSMSSync.Controllers
                 Data = _data
             });
         }
+
+        [HttpGet("SendSyncData")]
+        public async Task<IActionResult> SendSyncDataAsync([FromQuery] string pan, [FromQuery] string emailId)
+        {
+            if (string.IsNullOrEmpty(pan) || string.IsNullOrEmpty(emailId))
+            {
+                return BadRequest("Invalid request data.");
+            }
+
+            // Fetch Data from Services
+            var reply = await _budgetService.GetMobileDataBackupAsync(pan, emailId, CancellationToken.None);
+
+            if (reply?.BackupFileName != null)
+            {
+                if (!System.IO.File.Exists(reply?.BackupFileName))
+                {
+                    return StatusCode(500, "Error generating SQLite file.");
+                }
+
+                // Return the file for download
+                var fileBytes = await System.IO.File.ReadAllBytesAsync(reply?.BackupFileName!);
+                var fileName = $"SyncData_{DateTime.UtcNow:yyyyMMddHHmmss}.sqlite";
+
+                return File(fileBytes, "application/x-sqlite3", fileName);
+            }
+
+            return NotFound();
+        }
+
 
 
         // Function to read SQLite database and return structured JSON
